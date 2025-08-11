@@ -1,6 +1,5 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ include file="../include/importTags.jsp" %>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 
@@ -30,7 +29,7 @@
     <div class="container">
 
         <a class="navbar-brand d-flex align-items-center gap-2" href="${ctx}/" aria-label="<spring:message code="navbar.home"/>">
-            <img src='<spring:url value="/imagies/logo.png"/>' alt="Logo" height="65"/>
+            <img src='<spring:url value="/images/logo.png"/>' alt="Logo" height="65"/>
             <span class="fw-semibold">Printable</span>
         </a>
 
@@ -73,13 +72,39 @@
 
                     </ul>
                 </li>
+                <sec:authorize access="!isAuthenticated()">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-1" href="<spring:url value="/login"/>">
+                  <i class="bi bi-person-circle"></i>
+                  <span class="d-md-inline d-none"><spring:message code="navbar.account"/></span>
+                </a>
+              </li>
+            </sec:authorize>
 
+            <sec:authorize access="isAuthenticated()">
+              <sec:authentication property="principal.username" var="username"/>
 
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-1" href="${ctx}/account">
-                        <i class="bi bi-person-circle"></i> <span class="d-md-inline d-none"><spring:message code="navbar.account"/></span>
-                    </a>
-                </li>
+              <li class="nav-item">
+                <span class="nav-link d-flex align-items-center gap-1">
+                  <i class="bi bi-person-circle"></i>
+                  <span class="d-md-inline d-none">Bienvenue, ${username}</span>
+                </span>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-1" href="<spring:url value="/authenticated"/>">
+                  <i class="bi bi-gear"></i>
+                  <span class="d-md-inline d-none">Mon compte</span>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-1" href="<spring:url value="/logout"/>">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span class="d-md-inline d-none">Déconnexion</span>
+                </a>
+              </li>
+            </sec:authorize>
 
 
                 <li class="nav-item">
@@ -110,7 +135,7 @@
 
             <div class="col-md-4 mb-3">
                 <a href="${ctx}/" class="d-flex align-items-center gap-2 mb-2 text-decoration-none">
-                    <img src='<spring:url value="/imagies/logo.png"/>' alt="Logo" height="36"/>
+                    <img src='<spring:url value="/images/logo.png"/>' alt="Logo" height="36"/>
                     <span class="fw-semibold">Printable</span>
                 </a>
                 <p class="text-muted small">
