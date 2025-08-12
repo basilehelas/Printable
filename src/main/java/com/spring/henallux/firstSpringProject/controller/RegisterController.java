@@ -1,4 +1,5 @@
 package com.spring.henallux.firstSpringProject.controller;
+
 import com.spring.henallux.firstSpringProject.model.User;
 import com.spring.henallux.firstSpringProject.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -27,13 +28,18 @@ public class RegisterController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String register(@Valid @ModelAttribute("user") User user, BindingResult errors) {
+    public String register(@Valid @ModelAttribute("user") User user, BindingResult errors, Model model) {
         if (errors.hasErrors()) {
-            System.out.println("Validation errors occurred during registration.");
             return "integrated:register";
         }
+
+        // Vérification email déjà pris
+        if (userService.emailExists(user.getEmail())) {
+            errors.rejectValue("email", "email.exists", "Un compte existe déjà avec cet email.");
+            return "integrated:register"; // reste sur la même page
+        }
+
         userService.registerNewUser(user);
-        System.out.printf("Use r : %s%n", user.getUsername());
         return "redirect:/home";
     }
 }

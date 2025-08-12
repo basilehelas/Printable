@@ -10,7 +10,7 @@
   </c:if>
 
   <form:form modelAttribute="user" method="POST" class="form">
-        <form:input path="username" placeholder="Nom d'utilisateur" cssClass="form-input" />
+        <form:input path="username" placeholder="Adresse mail" cssClass="form-input" />
         <form:password path="password" placeholder="Mot de passe" cssClass="form-input" />
     <form:button type="submit" class="form-button">S'inscrire</form:button>
     </form:form>

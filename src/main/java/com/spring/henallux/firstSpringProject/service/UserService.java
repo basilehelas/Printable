@@ -16,6 +16,7 @@ public class UserService {
     public UserService(UserDataAccess userDataAccess) {
         this.userDataAccess = userDataAccess;
     }
+
     @Transactional
     public void registerNewUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
@@ -26,6 +27,10 @@ public class UserService {
         user.setCredentialsNonExpired(true);
 
         userDataAccess.save(user);
+    }
+
+    public boolean emailExists(String email) {
+        return userDataAccess.existsByEmail(email.trim().toLowerCase());
     }
 
 }
