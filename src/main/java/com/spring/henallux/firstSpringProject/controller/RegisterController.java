@@ -33,10 +33,9 @@ public class RegisterController {
             return "integrated:register";
         }
 
-        // Vérification email déjà pris
         if (userService.emailExists(user.getEmail())) {
             errors.rejectValue("email", "email.exists", "Un compte existe déjà avec cet email.");
-            return "integrated:register"; // reste sur la même page
+            return "integrated:register";
         }
 
         userService.registerNewUser(user);
