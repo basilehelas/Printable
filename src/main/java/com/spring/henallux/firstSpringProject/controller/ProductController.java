@@ -29,7 +29,17 @@ public class ProductController {
 
         model.addAttribute("products", list);
         model.addAttribute("pageTitle", "Products");
-        model.addAttribute("currentCategoryId", categoryId); // pour afficher le nom sélectionné
+        model.addAttribute("currentCategoryId", categoryId);
+        return "integrated:product";
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public String listByCategory(@PathVariable Integer categoryId, Model model) {
+        List<Product> list = products.getByCategory(categoryId);
+
+        model.addAttribute("products", list);
+        model.addAttribute("pageTitle", "Products");
+        model.addAttribute("currentCategoryId", categoryId);
         return "integrated:product";
     }
 
