@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="${ctx}/css/style.css"/>
 
     <spring:url var="localeFr" value="">
-        <spring:param name="locale" value="fr" />
+        <spring:param name="lang" value="fr" />
     </spring:url>
 
     <spring:url var="localeEn" value="">
-        <spring:param name="locale" value="en" />
+        <spring:param name="lang" value="en" />
     </spring:url>
 
 </head>
@@ -51,11 +51,18 @@
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-bag"></i> <spring:message code="navbar.products"/>
                     </a>
+
                     <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-                        <li><a class="dropdown-item" href="<spring:url value="/product"/>">cat 1</a></li>
-                        <li><a class="dropdown-item" href="${ctx}/categories">cat 2</a></li>
+                        <c:forEach var="c" items="${categoriesNames}">
+                            <li>
+                                <a class="dropdown-item" href="${ctx}/product?categoryId=${c.id}">
+                                    <c:out value="${c.name}"/>
+                                </a>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </li>
+
             </ul>
 
 
