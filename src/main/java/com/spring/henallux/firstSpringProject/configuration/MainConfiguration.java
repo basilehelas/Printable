@@ -34,7 +34,7 @@ public class MainConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor interceptor = new LocaleChangeInterceptor();
-        interceptor.setParamName("locale");
+        interceptor.setParamName("lang");
         registry.addInterceptor(interceptor);
     }
 

@@ -55,7 +55,7 @@
                     <ul class="dropdown-menu" aria-labelledby="productsDropdown">
                         <c:forEach var="c" items="${categoriesNames}">
                             <li>
-                                <a class="dropdown-item" href="${ctx}/product?categoryId=${c.id}">
+                                <a class="dropdown-item" href="${ctx}/products?categoryId=${c.id}">
                                     <c:out value="${c.name}"/>
                                 </a>
                             </li>

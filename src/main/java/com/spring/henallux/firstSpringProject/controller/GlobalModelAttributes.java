@@ -19,8 +19,8 @@ public class GlobalModelAttributes {
     }
     @ModelAttribute("categoriesNames")
     public List<CategoryLabel> categoriesNames(
-            @RequestParam(value = "lang", required = false) String lang,
-            @RequestParam(value = "locale", required = false) String localeParam) {
+            @RequestParam(value = "lang", required = false) String lang
+            ) {
 
         String language = ((lang != null && !lang.isEmpty())
                 ? lang
