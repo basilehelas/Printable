@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional(Transactional.TxType.SUPPORTS) // lecture seule
+@Transactional(Transactional.TxType.SUPPORTS)
 public class CategoryTranslationDAO implements CategoryTranslationDataAccess {
 
     private final TranslationRepository translations;
