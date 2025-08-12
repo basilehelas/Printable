@@ -28,7 +28,7 @@
 <nav class="navbar navbar-expand-md bg-light border-bottom">
     <div class="container">
 
-        <a class="navbar-brand d-flex align-items-center gap-2" href="${ctx}/" aria-label="<spring:message code="navbar.home"/>">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="<spring:url value="/home"/>" aria-label="<spring:message code="navbar.home"/>">
             <img src='<spring:url value="/images/logo.png"/>' alt="Logo" height="65"/>
             <span class="fw-semibold">Printable</span>
         </a>
@@ -43,7 +43,7 @@
             <!-- Centre : Home + Produits -->
             <ul class="navbar-nav mx-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="${ctx}/"><i class="bi bi-house-door"></i> <spring:message code="navbar.home"/> </a>
+                    <a class="nav-link" href="<spring:url value="/home"/>"><i class="bi bi-house-door"></i> <spring:message code="navbar.home"/> </a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -52,7 +52,7 @@
                         <i class="bi bi-bag"></i> <spring:message code="navbar.products"/>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="productsDropdown">
-                        <li><a class="dropdown-item" href="${ctx}/products">cat 1</a></li>
+                        <li><a class="dropdown-item" href="<spring:url value="/product"/>">cat 1</a></li>
                         <li><a class="dropdown-item" href="${ctx}/categories">cat 2</a></li>
                     </ul>
                 </li>
@@ -134,7 +134,7 @@
         <div class="row">
 
             <div class="col-md-4 mb-3">
-                <a href="${ctx}/" class="d-flex align-items-center gap-2 mb-2 text-decoration-none">
+                <a href="<spring:url value="/home"/>" class="d-flex align-items-center gap-2 mb-2 text-decoration-none">
                     <img src='<spring:url value="/images/logo.png"/>' alt="Logo" height="36"/>
                     <span class="fw-semibold">Printable</span>
                 </a>
