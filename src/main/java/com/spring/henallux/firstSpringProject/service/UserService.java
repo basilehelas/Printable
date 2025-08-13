@@ -21,11 +21,6 @@ public class UserService {
     public void registerNewUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthorities("ROLE_USER");
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
-
         userDataAccess.save(user);
     }
 

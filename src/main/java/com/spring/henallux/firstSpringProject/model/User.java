@@ -13,29 +13,33 @@ public class User implements UserDetails {
 
     private Integer id;
 
-    @NotBlank(message = "Le nom d'utilisateur est obligatoire.")
-    @Size(min = 3, max = 100, message = "Le nom d'utilisateur doit faire entre 3 et 100 caractères.")
-    @Pattern(regexp = "^[A-Za-z0-9._-]+$", message = "Seuls lettres, chiffres, '.', '_' et '-' sont autorisés.")
+    @NotBlank
+    @Size(min = 3, max = 10)
+    @Pattern(regexp = "^[A-Za-z0-9._-]+$")
     private String username;
 
-    @NotBlank(message = "Le mot de passe est obligatoire.")
-    @Size(min = 8, max = 255, message = "Le mot de passe doit faire entre 8 et 255 caractères.")
+    @NotBlank
+    @Size(min = 8, max = 255)
     private String password;
 
-    @NotBlank(message = "L'e-mail est obligatoire.")
-    @Email(message = "Format d'e-mail invalide.")
-    @Size(max = 255, message = "L'e-mail ne peut pas dépasser 255 caractères.")
+    @NotBlank
+    @Email
+    @Size(max = 255)
     private String email;
 
     private String address;
 
-    @Size(max = 255, message = "Les autorités ne peuvent pas dépasser 255 caractères.")
     private String authorities;
 
     private boolean accountNonExpired = true;
     private boolean accountNonLocked = true;
     private boolean credentialsNonExpired = true;
     private boolean enabled = true;
+
+    @Size(max = 20)
+    @Pattern(regexp = "^[+0-9 ]{6,20}$")
+    private String phoneNumber;
+
 
     public User() {}
 
@@ -48,7 +52,8 @@ public class User implements UserDetails {
                 boolean accountNonExpired,
                 boolean accountNonLocked,
                 boolean credentialsNonExpired,
-                boolean enabled) {
+                boolean enabled,
+                String phoneNumber) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -59,6 +64,7 @@ public class User implements UserDetails {
         this.accountNonLocked = accountNonLocked;
         this.credentialsNonExpired = credentialsNonExpired;
         this.enabled = enabled;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
@@ -141,4 +147,7 @@ public class User implements UserDetails {
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
+
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 }
