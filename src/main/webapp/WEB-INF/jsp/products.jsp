@@ -2,8 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
-
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 
 <div class="container py-4">
@@ -83,57 +82,67 @@
 </style>
 
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 id="pm-title" class="modal-title"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-        <div class="row g-3">
-          <div class="col-md-5 d-flex justify-content-center align-items-start">
-            <img id="pm-img" alt="" class="img-fluid rounded border" style="max-height:360px;">
-          </div>
-          <div class="col-md-7">
-            <p id="pm-desc" class="text-muted"></p>
-            <div class="d-flex align-items-center gap-3 mt-3">
-              <div id="pm-price" class="fw-bold fs-4"></div>
-              <i class="bi bi-cart-plus fs-3 text-secondary" title="Ajouter (bientôt)"></i>
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="pm-title" class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="modal-footer">
-        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Fermer</button>
-      </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-5 d-flex justify-content-center align-items-start">
+                        <img id="pm-img" alt="" class="img-fluid rounded border" style="max-height:360px;">
+                    </div>
+                    <div class="col-md-7">
+                        <p id="pm-desc" class="text-muted"></p>
+                        <div class="d-flex align-items-center gap-3 mt-3">
+                            <div id="pm-price" class="fw-bold fs-4"></div>
+                            <i class="bi bi-cart-plus fs-3 text-secondary" title="Ajouter (bientôt)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <form id="pm-add-form" method="post">
+                    <button type="submit" class="btn btn-dark">
+                        <i class="bi bi-cart-plus"></i> Ajouter au panier
+                    </button>
+                </form>
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-  (function () {
-    const modalEl = document.getElementById('productModal');
+    (function () {
+        const modalEl = document.getElementById('productModal');
+        const formEl = document.getElementById('pm-add-form');
 
-    document.querySelectorAll('.js-open-product').forEach(a => {
-      a.addEventListener('click', (e) => {
-        if (e.metaKey || e.ctrlKey) return;
-        e.preventDefault();
+        document.querySelectorAll('.js-open-product').forEach(a => {
+            a.addEventListener('click', (e) => {
+                if (e.metaKey || e.ctrlKey) return;
+                e.preventDefault();
 
-        const name  = a.dataset.name || '';
-        const desc  = a.dataset.desc || '';
-        const price = a.dataset.price || '';
-        const img   = a.dataset.img || '';
+                const id = a.dataset.id;
+                const name = a.dataset.name || '';
+                const desc = a.dataset.desc || '';
+                const price = a.dataset.price || '';
+                const img = a.dataset.img || '';
 
-        document.getElementById('pm-title').textContent = name;
-        document.getElementById('pm-desc').textContent  = desc;
-        document.getElementById('pm-price').textContent = price + ' €';
-        document.getElementById('pm-img').src = img;
+                document.getElementById('pm-title').textContent = name;
+                document.getElementById('pm-desc').textContent = desc;
+                document.getElementById('pm-price').textContent = price + ' €';
+                document.getElementById('pm-img').src = img;
 
-        const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-        modal.show();
-      });
-    });
-  })();
+                formEl.action = '${ctx}/cart/add/' + id;
+
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+            });
+        });
+    })();
 </script>
