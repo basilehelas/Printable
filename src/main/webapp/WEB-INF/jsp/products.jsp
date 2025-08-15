@@ -20,45 +20,67 @@
         </c:if>
     </h1>
 
-
-      <c:choose>
-    <c:when test="${empty products}">
-      <div class="alert alert-info">No products to display.</div>
-    </c:when>
-    <c:otherwise>
-      <div class="row g-4">
-        <c:forEach var="p" items="${products}">
-          <div class="col-12 col-sm-6 col-lg-4">
-            <a href="${ctx}/products/${p.id}"
-               class="text-decoration-none text-dark js-open-product"
-               data-id="${p.id}"
-               data-name="${p.name}"
-               data-desc="${fn:escapeXml(p.description)}"
-               data-price="${p.price}"
-               data-img="${ctx}/products/${p.id}/image">
-              <div class="card h-100 shadow-sm">
-                <img class="card-img-top"
-                     src="${ctx}/products/${p.id}/image"
-                     alt="${p.name}"
-                     onerror="this.style.display='none'"/>
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title mb-1">${p.name}</h5>
-                  <p class="card-text text-muted small mb-3">
-                    <c:out value="${p.description}"/>
-                  </p>
-                  <div class="mt-auto d-flex justify-content-between align-items-center">
-                    <span class="fw-bold">${p.price} €</span>
-                    <i class="bi bi-cart-plus fs-5 text-secondary" title="Ajouter (bientôt)"></i>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </c:forEach>
-      </div>
-    </c:otherwise>
-  </c:choose>
+    <c:choose>
+        <c:when test="${empty products}">
+            <div class="alert alert-info">No products to display.</div>
+        </c:when>
+        <c:otherwise>
+            <div class="product-columns">
+                <c:forEach var="p" items="${products}">
+                    <a href="${ctx}/products/${p.id}"
+                       class="product-card text-decoration-none text-dark js-open-product"
+                       data-id="${p.id}"
+                       data-name="${p.name}"
+                       data-desc="${fn:escapeXml(p.description)}"
+                       data-price="${p.price}"
+                       data-img="${ctx}/products/${p.id}/image">
+                        <div class="card shadow-sm mb-4">
+                            <img class="card-img-top"
+                                 src="${ctx}/products/${p.id}/image"
+                                 alt="${p.name}"
+                                 onerror="this.style.display='none'"/>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title mb-1">${p.name}</h5>
+                                <p class="card-text text-muted small mb-3">
+                                    <c:out value="${p.description}"/>
+                                </p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold">${p.price} €</span>
+                                    <i class="bi bi-cart-plus fs-5 text-secondary" title="Ajouter (bientôt)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </c:forEach>
+            </div>
+        </c:otherwise>
+    </c:choose>
 </div>
+
+<style>
+    .product-columns {
+        column-count: 3;
+        column-gap: 1.5rem;
+    }
+
+    .product-card {
+        display: inline-block;
+        width: 100%;
+    }
+
+    @media (max-width: 992px) {
+        .product-columns {
+            column-count: 2;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .product-columns {
+            column-count: 1;
+        }
+    }
+
+</style>
 
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
