@@ -101,14 +101,14 @@
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-1" href="<spring:url value="/authenticated"/>">
                   <i class="bi bi-gear"></i>
-                  <span class="d-md-inline d-none">Mon compte</span>
+                  <span class="d-md-inline d-none"><spring:message code="navbar.myaccount"/></span>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-1" href="<spring:url value="/logout"/>">
                   <i class="bi bi-box-arrow-right"></i>
-                  <span class="d-md-inline d-none">Déconnexion</span>
+                  <span class="d-md-inline d-none"><spring:message code="navbar.logout"/></span>
                 </a>
               </li>
             </sec:authorize>
