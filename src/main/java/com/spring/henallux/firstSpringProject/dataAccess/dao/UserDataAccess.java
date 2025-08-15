@@ -4,7 +4,8 @@ import com.spring.henallux.firstSpringProject.model.User;
 
 public interface UserDataAccess {
     User findByUsername(String username);
-    User save(User user);
+    void save(User user);
     User findByEmail(String email);
     boolean existsByEmail(String email);
+
 }

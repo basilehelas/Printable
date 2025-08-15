@@ -30,10 +30,9 @@ public class UserDAO implements UserDataAccess {
         return providerConverter.userEntityToUserModel(entity);
     }
 
-    public User save(User user) {
+    public void save(User user) {
         UserEntity userEntity = providerConverter.userModelToUserEntity(user);
         userRepository.save(userEntity);
-        return user;
     }
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
