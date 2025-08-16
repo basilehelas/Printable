@@ -9,18 +9,12 @@ public class UserUpdate {
     @Pattern(regexp = "^[A-Za-z0-9._-]+$")
     private String username;
 
-    @NotBlank
-    @Email
     @Size(max = 255)
-    private String email;
-
-    // Optionnels
     private String address;
 
     @Size(max = 20)
-    @Pattern(regexp = "^[+0-9 ]{6,20}$")
+    @Pattern(regexp = "^$|^[+0-9 ]{6,20}$")
     private String phoneNumber;
-
 
     @Pattern(
             regexp = "^$|.{8,255}$",
@@ -31,8 +25,6 @@ public class UserUpdate {
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
     public String getPhoneNumber() { return phoneNumber; }
