@@ -3,7 +3,9 @@ package com.spring.henallux.firstSpringProject.service;
 import com.spring.henallux.firstSpringProject.dataAccess.dao.UserDataAccess;
 import com.spring.henallux.firstSpringProject.dataAccess.entity.UserEntity;
 import com.spring.henallux.firstSpringProject.dataAccess.repository.UserRepository;
+import com.spring.henallux.firstSpringProject.dataAccess.util.ProviderConverter;
 import com.spring.henallux.firstSpringProject.model.User;
+import com.spring.henallux.firstSpringProject.model.UserUpdate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,13 @@ public class  UserService {
 
     private final UserDataAccess userDataAccess;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final UserRepository userRepository;
+    private final ProviderConverter providerConverter;
 
-    public UserService(UserDataAccess userDataAccess) {
+    public UserService(UserDataAccess userDataAccess, UserRepository userRepository, ProviderConverter providerConverter) {
+        this.userRepository = userRepository;
         this.userDataAccess = userDataAccess;
+        this.providerConverter = providerConverter;
     }
 
     @Transactional
@@ -29,20 +35,21 @@ public class  UserService {
     public boolean emailExists(String email) {
         return userDataAccess.existsByEmail(email.trim().toLowerCase());
     }
-
-
     @Transactional
-    public void updateUser(String email, String username, String address, String phoneNumber, String rawPassword) {
-        User user = userDataAccess.findByEmail(email);
-        if (user == null) {
-            throw new IllegalArgumentException("User not found with email: " + email);
+    public User updateUser(String email, UserUpdate userUpdate) {
+        UserEntity existingUser = userRepository.findByEmail(email);
+        if (existingUser == null) {
+            throw new RuntimeException("Utilisateur non trouvé");
         }
-        user.setUsername(username);
-        user.setAddress(address);
-        user.setPhoneNumber(phoneNumber);
-        if (rawPassword != null && !rawPassword.isBlank()) {
-            user.setPassword(encoder.encode(rawPassword));
+        existingUser.setUsername(userUpdate.getUsername());
+        existingUser.setAddress(userUpdate.getAddress());
+        existingUser.setPhoneNumber(userUpdate.getPhoneNumber());
+
+        if (userUpdate.getPassword() != null && !userUpdate.getPassword().trim().isEmpty()) {
+            existingUser.setPassword(encoder.encode(userUpdate.getPassword()));
         }
-        userDataAccess.save(user);
+        UserEntity userEntity = userRepository.save(existingUser);
+        User user = providerConverter.userEntityToUserModel(userEntity);
+        return user;
     }
 }
