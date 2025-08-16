@@ -22,12 +22,19 @@ public class CartController {
     }
 
     @PostMapping("/add/{id}")
-    public String addToCart(@PathVariable Integer id, HttpServletRequest request) {
+    public String addToCart(
+            @PathVariable Integer id,
+            @RequestParam(name = "quantity", defaultValue = "1") Integer quantity,
+            HttpServletRequest request) {
+
+        int qty = (quantity == null || quantity < 1) ? 1 : quantity;
+
         products.getAll().stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
-                .ifPresent(cartService::addProduct);
-        System.out.println("Adding product " + id + " to the cart");
+                .ifPresent(p -> cartService.addProduct(p, qty));
+
+        System.out.println("Adding product " + id + " x" + qty + " to the cart");
         System.out.println(cartService.getItems());
         System.out.println(cartService.getTotal());
 

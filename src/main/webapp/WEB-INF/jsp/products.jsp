@@ -105,13 +105,27 @@
             </div>
 
             <div class="modal-footer">
-                <form id="pm-add-form" method="post">
-                    <button type="submit" class="btn btn-dark">
-                        <i class="bi bi-cart-plus"></i> Ajouter au panier
-                    </button>
+                <form id="pm-add-form" method="post" action="">
+                    <div class="d-flex align-items-center gap-2">
+                        <label for="quantity" class="form-label mb-0">Quantité :</label>
+                        <input type="number"
+                               name="quantity"
+                               id="quantity"
+                               value="1"
+                               min="1"
+                               class="form-control"
+                               style="width: 80px;" />
+
+                        <button type="submit" class="btn btn-dark">
+                            <i class="bi bi-cart-plus"></i> Ajouter au panier
+                        </button>
+                    </div>
                 </form>
+
                 <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
+
+
 
         </div>
     </div>

@@ -13,8 +13,11 @@ import java.util.Map;
 public class CartService {
     private final Map<Product, Integer> items = new HashMap<>();
 
-    public void addProduct(Product product) {
-        items.merge(product, 1, Integer::sum);
+    public void addProduct(Product product, int quantity) {
+        if (quantity < 1) {
+            quantity = 1;
+        }
+        items.merge(product, quantity, Integer::sum);
     }
 
     public void removeProduct(Product product) {
