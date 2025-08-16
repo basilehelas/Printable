@@ -9,7 +9,6 @@ public class Product {
     private final BigDecimal price;
     private final String description;
     private final Integer categoryId;
-//    private final String imageUrl; // pour tes images dans la JSP
 
     public Product(Integer id, String name, BigDecimal price, String description, Integer categoryId) {
         this.id = id;

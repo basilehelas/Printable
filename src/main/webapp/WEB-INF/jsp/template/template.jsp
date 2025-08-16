@@ -39,14 +39,20 @@
                 <c:forEach var="item" items="${cartItems}">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-2">
-<%--                            <img src="${item.product.imageUrl}" alt="${item.product.name}" style="width:50px;height:50px;object-fit:cover;">--%>
+                            <img src="${ctx}/products/${item.product.id}/image"
+                                 alt="${item.product.name}"
+                                 style="width:50px;height:50px;object-fit:cover;"
+                                 onerror="this.src='https://placehold.jp/50x50.png';">
+
+
                             <div>
                                 <div class="fw-semibold"><c:out value="${item.product.name}"/></div>
                                 <div class="text-muted small">x<c:out value="${item.quantity}"/></div>
                             </div>
                         </div>
                         <span class="fw-semibold">
-                            €<fmt:formatNumber value="${item.product.price * item.quantity}" type="number" minFractionDigits="2"/>
+                            €<fmt:formatNumber value="${item.product.price * item.quantity}" type="number"
+                                               minFractionDigits="2"/>
                         </span>
                     </li>
                 </c:forEach>
@@ -60,15 +66,15 @@
 
             <!-- Bouton passer commande -->
             <a href="${ctx}/checkout" class="btn btn-dark w-100">
-<%--                <spring:message code="cart.checkout"/>--%>
-checkut
+                    <%--                <spring:message code="cart.checkout"/>--%>
+                checkut
             </a>
         </c:if>
 
         <c:if test="${empty cartItems}">
             <p class="text-muted text-center my-auto">
-<%--                <spring:message code="cart.empty"/>--%>
-cart empty
+                    <%--                <spring:message code="cart.empty"/>--%>
+                cart empty
             </p>
         </c:if>
 
@@ -145,7 +151,6 @@ cart empty
                     <sec:authentication property="principal.username" var="username"/>
 
 
-
                     <li class="nav-item">
                 <span class="nav-link d-flex align-items-center gap-1">
                   <i class="bi bi-person-circle"></i>
@@ -168,17 +173,17 @@ cart empty
                     </li>
                 </sec:authorize>
 
-                  <sec:authorize access="hasRole('ADMIN')">
-                        <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-1"
-                               href="<spring:url value='/admin'/>">
-                                <i class="bi bi-ticket-perforated"></i>
-                                <span class="d-md-inline d-none">
+                <sec:authorize access="hasRole('ADMIN')">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-1"
+                           href="<spring:url value='/admin'/>">
+                            <i class="bi bi-ticket-perforated"></i>
+                            <span class="d-md-inline d-none">
                                     <spring:message code="navbar.admin.promo"/>
                                 </span>
-                            </a>
-                        </li>
-                    </sec:authorize>
+                        </a>
+                    </li>
+                </sec:authorize>
 
                 <li class="nav-item">
                     <a class="nav-link position-relative d-flex align-items-center gap-1"
