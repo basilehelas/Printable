@@ -21,7 +21,7 @@ public class CartService {
     }
 
     public void removeProduct(Product product) {
-        items.computeIfPresent(product, (p, qty) -> (qty > 1) ? qty - 1 : null);
+        items.remove(product);
     }
 
     public Map<Product, Integer> getItems() {
@@ -36,6 +36,14 @@ public class CartService {
         return items.entrySet().stream()
                 .map(e -> e.getKey().getPrice().multiply(BigDecimal.valueOf(e.getValue())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public void updateQuantity(Product product, int quantity) {
+        if (quantity < 1) {
+            items.remove(product);
+        } else {
+            items.put(product, quantity);
+        }
     }
 
     public void clear() {

@@ -44,27 +44,43 @@
                                  style="width:50px;height:50px;object-fit:cover;"
                                  onerror="this.src='https://placehold.jp/50x50.png';">
 
-
                             <div>
                                 <div class="fw-semibold"><c:out value="${item.product.name}"/></div>
-                                <div class="text-muted small">x<c:out value="${item.quantity}"/></div>
+                                <form action="${ctx}/cart/update/${item.product.id}" method="post"
+                                      class="d-flex align-items-center gap-2 auto-submit-form">
+                                    <input type="number"
+                                           name="quantity"
+                                           value="${item.quantity}"
+                                           min="1"
+                                           class="form-control form-control-sm"
+                                           style="width: 70px; text-align:center;"
+                                           onchange="this.form.submit();"/>
+                                </form>
                             </div>
                         </div>
-                        <span class="fw-semibold">
-                            €<fmt:formatNumber value="${item.product.price * item.quantity}" type="number"
-                                               minFractionDigits="2"/>
-                        </span>
+
+
+                        <div class="d-flex flex-column align-items-end">
+            <span class="fw-semibold">
+                €<fmt:formatNumber value="${item.product.price * item.quantity}" type="number"
+                                   minFractionDigits="2"/>
+            </span>
+                            <form action="${ctx}/cart/remove/${item.product.id}" method="post" class="mt-1">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Supprimer">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     </li>
                 </c:forEach>
             </ul>
 
-            <!-- Total -->
+
             <div class="d-flex justify-content-between fw-bold mb-3">
                 <span>Total :</span>
                 <span>€<fmt:formatNumber value="${cartTotal}" type="number" minFractionDigits="2"/></span>
             </div>
 
-            <!-- Bouton passer commande -->
             <a href="${ctx}/checkout" class="btn btn-dark w-100">
                     <%--                <spring:message code="cart.checkout"/>--%>
                 checkut
@@ -72,10 +88,15 @@
         </c:if>
 
         <c:if test="${empty cartItems}">
-            <p class="text-muted text-center my-auto">
-                    <%--                <spring:message code="cart.empty"/>--%>
-                cart empty
-            </p>
+            <div class="text-center my-auto py-5">
+                <i class="bi bi-cart-x fs-1 text-muted mb-3"></i>
+                <h5 class="text-muted mb-2">Votre panier est vide</h5>
+                <p class="text-muted mb-4">Ajoutez des produits pour commencer votre aventure d'achat !</p>
+                <a href="${ctx}/products" class="btn btn-outline-dark">
+                    <i class="bi bi-bag"></i> Voir les produits
+                </a>
+                <%--                <spring:message code="cart.empty"/>--%>
+            </div>
         </c:if>
 
     </div>
