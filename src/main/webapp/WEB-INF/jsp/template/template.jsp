@@ -29,7 +29,7 @@
         <h5 class="offcanvas-title" id="cartOffcanvasLabel">
             <i class="bi bi-cart3"></i> <spring:message code="navbar.cart"/>
         </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<spring:message code="cart.close"/>"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column">
 
@@ -66,7 +66,7 @@
                                    minFractionDigits="2"/>
             </span>
                             <form action="${ctx}/cart/remove/${item.product.id}" method="post" class="mt-1">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Supprimer">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="<spring:message code="cart.removeItem"/>">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -77,25 +77,23 @@
 
 
             <div class="d-flex justify-content-between fw-bold mb-3">
-                <span>Total :</span>
+                <span><spring:message code="cart.total"/></span>
                 <span>€<fmt:formatNumber value="${cartTotal}" type="number" minFractionDigits="2"/></span>
             </div>
 
             <a href="${ctx}/checkout" class="btn btn-dark w-100">
-                    <%--                <spring:message code="cart.checkout"/>--%>
-                checkut
+                <spring:message code="cart.checkout"/>
             </a>
         </c:if>
 
         <c:if test="${empty cartItems}">
             <div class="text-center my-auto py-5">
                 <i class="bi bi-cart-x fs-1 text-muted mb-3"></i>
-                <h5 class="text-muted mb-2">Votre panier est vide</h5>
-                <p class="text-muted mb-4">Ajoutez des produits pour commencer votre aventure d'achat !</p>
+                <h5 class="text-muted mb-2"><spring:message code="cart.empty.message"/></h5>
+                <p class="text-muted mb-4"><spring:message code="cart.empty.addProducts"/></p>
                 <a href="${ctx}/products" class="btn btn-outline-dark">
-                    <i class="bi bi-bag"></i> Voir les produits
+                    <i class="bi bi-bag"></i> <spring:message code="cart.empty.seeProducts"/>
                 </a>
-                <%--                <spring:message code="cart.empty"/>--%>
             </div>
         </c:if>
 
@@ -154,8 +152,10 @@
                             code="navbar.language"/></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-                        <li><a class="dropdown-item" href="${localeFr}">FR – Français</a></li>
-                        <li><a class="dropdown-item" href="${localeEn}">EN – English</a></li>
+                        <li><a class="dropdown-item" href="${localeFr}"><spring:message code="locale.button.fr"/></a>
+                        </li>
+                        <li><a class="dropdown-item" href="${localeEn}"><spring:message code="locale.button.en"/></a>
+                        </li>
 
                     </ul>
                 </li>
@@ -175,7 +175,7 @@
                     <li class="nav-item">
                 <span class="nav-link d-flex align-items-center gap-1">
                   <i class="bi bi-person-circle"></i>
-                  <span class="d-md-inline d-none">Bienvenue, ${username}</span>
+                  <span class="d-md-inline d-none"><spring:message code="navbar.welcomeMessage"/> ${username}</span>
                 </span>
                     </li>
 
@@ -220,25 +220,13 @@
                     </a>
                 </li>
 
-                <%--                <li class="nav-item">--%>
-                <%--                    <a class="nav-link position-relative d-flex align-items-center gap-1" href="${ctx}/cart"--%>
-                <%--                       aria-label="Panier">--%>
-                <%--                        <i class="bi bi-cart3"></i> <span class="d-md-inline d-none"><spring:message--%>
-                <%--                            code="navbar.cart"/></span>--%>
-                <%--                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">--%>
-                <%--              <c:out value="${cartCount != null ? cartCount : 0}"/>--%>
-                <%--              <span class="visually-hidden"> product in cart</span></span>--%>
-                <%--                    </a>--%>
-                <%--                </li>--%>
             </ul>
         </div>
     </div>
 </nav>
 
-
 <main>
     <tiles:insertAttribute name="main-content"/>
-
 </main>
 
 
@@ -280,7 +268,7 @@
         </div>
 
         <div class="border-top pt-3 mt-3 text-center small text-muted">
-            &copy; 2025 Printable — <spring:message code="footer.copyright"/>.
+            <spring:message code="footer.copyright"/>.
         </div>
     </div>
 </footer>
