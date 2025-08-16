@@ -144,6 +144,8 @@ cart empty
                 <sec:authorize access="isAuthenticated()">
                     <sec:authentication property="principal.username" var="username"/>
 
+
+
                     <li class="nav-item">
                 <span class="nav-link d-flex align-items-center gap-1">
                   <i class="bi bi-person-circle"></i>
@@ -166,6 +168,17 @@ cart empty
                     </li>
                 </sec:authorize>
 
+                  <sec:authorize access="hasRole('ADMIN')">
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-1"
+                               href="<spring:url value='/admin'/>">
+                                <i class="bi bi-ticket-perforated"></i>
+                                <span class="d-md-inline d-none">
+                                    <spring:message code="navbar.admin.promo"/>
+                                </span>
+                            </a>
+                        </li>
+                    </sec:authorize>
 
                 <li class="nav-item">
                     <a class="nav-link position-relative d-flex align-items-center gap-1"
