@@ -2,6 +2,7 @@ package com.spring.henallux.firstSpringProject.controller;
 
 import com.spring.henallux.firstSpringProject.dataAccess.dao.CategoryTranslationDataAccess;
 import com.spring.henallux.firstSpringProject.model.CategoryLabel;
+import com.spring.henallux.firstSpringProject.service.CartService;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +14,11 @@ import java.util.Locale;
 public class GlobalModelAttributes {
 
     private final CategoryTranslationDataAccess categoryTx;
+    private final CartService cartService;
 
-    public GlobalModelAttributes(CategoryTranslationDataAccess categoryTx) {
+    public GlobalModelAttributes(CategoryTranslationDataAccess categoryTx, CartService cartService) {
         this.categoryTx = categoryTx;
+        this.cartService = cartService;
     }
     @ModelAttribute("categoriesNames")
     public List<CategoryLabel> categoriesNames(
@@ -27,5 +30,10 @@ public class GlobalModelAttributes {
                 :  "fr");
 
         return categoryTx.listCategoriesWithNames(language);
+    }
+
+    @ModelAttribute("cartCount")
+    public int cartCount() {
+        return cartService.getCount();
     }
 }
