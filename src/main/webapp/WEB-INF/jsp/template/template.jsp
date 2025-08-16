@@ -236,10 +236,8 @@ cart empty
                             code="footer.contact"/></a></li>
                     <li><a href="${ctx}/info/privacy-policy" class="text-muted text-decoration-none"><spring:message
                             code="footer.privacy"/></a></li>
-                    <li><a href="${ctx}/info/terms" class="text-muted text-decoration-none"><spring:message
-                            code="footer.terms"/></a></li>
-                    <li><a href="${ctx}/info/shipping" class="text-muted text-decoration-none"><spring:message
-                            code="footer.shipping"/></a></li>
+                    <li><a href="${ctx}/info/about-us" class="text-muted text-decoration-none"><spring:message
+                            code="footer.about"/></a></li>
                 </ul>
             </div>
 
