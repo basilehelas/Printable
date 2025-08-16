@@ -39,7 +39,7 @@
                 <c:forEach var="item" items="${cartItems}">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center gap-2">
-                            <img src="${item.product.imageUrl}" alt="${item.product.name}" style="width:50px;height:50px;object-fit:cover;">
+<%--                            <img src="${item.product.imageUrl}" alt="${item.product.name}" style="width:50px;height:50px;object-fit:cover;">--%>
                             <div>
                                 <div class="fw-semibold"><c:out value="${item.product.name}"/></div>
                                 <div class="text-muted small">x<c:out value="${item.quantity}"/></div>

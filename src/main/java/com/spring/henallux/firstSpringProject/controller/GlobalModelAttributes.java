@@ -1,14 +1,15 @@
 package com.spring.henallux.firstSpringProject.controller;
 
 import com.spring.henallux.firstSpringProject.dataAccess.dao.CategoryTranslationDataAccess;
+import com.spring.henallux.firstSpringProject.model.CartItem;
 import com.spring.henallux.firstSpringProject.model.CategoryLabel;
 import com.spring.henallux.firstSpringProject.service.CartService;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Locale;
 
 @ControllerAdvice
 public class GlobalModelAttributes {
@@ -20,14 +21,15 @@ public class GlobalModelAttributes {
         this.categoryTx = categoryTx;
         this.cartService = cartService;
     }
+
     @ModelAttribute("categoriesNames")
     public List<CategoryLabel> categoriesNames(
             @RequestParam(value = "lang", required = false) String lang
-            ) {
+    ) {
 
         String language = ((lang != null && !lang.isEmpty())
                 ? lang
-                :  "fr");
+                : "fr");
 
         return categoryTx.listCategoriesWithNames(language);
     }
@@ -36,4 +38,17 @@ public class GlobalModelAttributes {
     public int cartCount() {
         return cartService.getCount();
     }
+
+    @ModelAttribute("cartItems")
+    public List<CartItem> cartItems() {
+        return cartService.getItems().entrySet().stream()
+                .map(e -> new CartItem(e.getKey(), e.getValue()))
+                .toList();
+    }
+
+    @ModelAttribute("cartTotal")
+    public BigDecimal cartTotal() {
+        return cartService.getTotal();
+    }
+
 }
