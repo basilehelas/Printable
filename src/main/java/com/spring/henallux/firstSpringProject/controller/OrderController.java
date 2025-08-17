@@ -45,7 +45,7 @@ public class OrderController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/checkout")
+    @GetMapping("/checkout")
     @Transactional
     public String checkout(@AuthenticationPrincipal com.spring.henallux.firstSpringProject.model.User principal) {
 
@@ -77,9 +77,9 @@ public class OrderController {
             orderLineRepository.save(line);
         }
 
-        cart.clear();
 
-        return "redirect:/orders/" + order.getOrderId();
+
+        return "redirect:/payement";
     }
 
     @GetMapping("/{orderId}")

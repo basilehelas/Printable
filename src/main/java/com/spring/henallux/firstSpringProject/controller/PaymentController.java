@@ -22,11 +22,12 @@ public class PaymentController {
     private final DiscountDataAccess discountDao;
     private final MessageSource messageSource; // i18n
 
+
     private static final String PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr";
     private static final String BUSINESS = "sb-vdqmk45344677@business.example.com";
     private static final String CLIENT_ID = "AWZsApF6HK9os6yWvkyoL4-wIwpmAtZWv9SQju2i3iuxri0MyEEcB4Ku36lBxbnGWsRtvdh9SWOuvJR5";
-    private static final String RETURN_URL = "http://localhost:8082/printable/home";
-    private static final String CANCEL_URL = "http://localhost:8082/printable/home";
+    private static final String RETURN_URL = "http://localhost:8082/printable/payement/success";
+    private static final String CANCEL_URL = "http://localhost:8082/printable/payement/failed";
     private static final String CURRENCY = "EUR";
 
     private static final String SESSION_COUPON = "appliedCoupon";
@@ -80,8 +81,32 @@ public class PaymentController {
         model.addAttribute("amount", finalTotal);
         model.addAttribute("subtotal", total);
         model.addAttribute("appliedCode", appliedCode);
+
+        //cartService.clear();
+
+
         return "integrated:payement";
     }
+
+
+    @GetMapping("/success")
+    public String paymentSuccess(Model model) {
+
+        cartService.clear();
+
+        model.addAttribute("message", "Paiement réussi !");
+        return "integrated:payment-success"; // à créer dans /WEB-INF/jsp/
+    }
+
+    @GetMapping("/failed")
+    public String paymentFailed(Model model) {
+        // Tu pourras gérer les erreurs, logs, etc.
+        model.addAttribute("message", "Le paiement a échoué ou a été annulé.");
+        return "integrated:payment-failed"; // à créer dans /WEB-INF/jsp/
+    }
+
+
+
 
     @PostMapping
     public String applyCoupon(@RequestParam(value = "code", required = false) String rawCode,
