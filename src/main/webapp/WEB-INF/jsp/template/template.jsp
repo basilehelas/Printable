@@ -81,9 +81,8 @@
                 <span>€<fmt:formatNumber value="${cartTotal}" type="number" minFractionDigits="2"/></span>
             </div>
 
-            <a href="${ctx}/checkout" class="btn btn-dark w-100">
-                    <%--                <spring:message code="cart.checkout"/>--%>
-                checkut
+            <a href="${ctx}/payement" class="btn btn-dark w-100">
+                <spring:message code="cart.checkout"/>
             </a>
         </c:if>
 

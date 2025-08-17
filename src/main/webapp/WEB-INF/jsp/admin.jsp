@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>Administration — Codes promo</title>
+    <title><spring:message code="admin.title"/></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
 </head>
@@ -13,102 +13,103 @@
 <div class="container py-4">
 
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <h1 class="h4 m-0"><i class="bi bi-ticket-perforated me-2"></i>Codes promo</h1>
+        <h1 class="h4 m-0"><i class="bi bi-ticket-perforated me-2"></i><spring:message code="admin.codes"/></h1>
         <a class="btn btn-outline-secondary btn-sm" href="<spring:url value='/home'/>">
-            <i class="bi bi-arrow-left"></i> Retour
+            <i class="bi bi-arrow-left"></i> <spring:message code="admin.back"/>
         </a>
     </div>
 
-    <!-- Messages -->
-    <c:if test="${not empty success}">
-        <div class="alert alert-success">${success}</div>
+    <c:if test="${not empty successCode}">
+        <div class="alert alert-success">
+            <spring:message code="${successCode}" arguments="${successArgs}"/>
+        </div>
     </c:if>
-    <c:if test="${not empty error}">
-        <div class="alert alert-danger">${error}</div>
+    <c:if test="${not empty errorCode}">
+        <div class="alert alert-danger">
+            <spring:message code="${errorCode}" arguments="${errorArgs}"/>
+        </div>
     </c:if>
 
-    <!-- Création -->
+
     <div class="card mb-4">
         <div class="card-header fw-semibold">
-            <i class="bi bi-plus-circle me-2"></i>Nouveau code
+            <i class="bi bi-plus-circle me-2"></i><spring:message code="admin.new"/>
         </div>
         <div class="card-body">
-            <form action="${ctx}/admin/promo-codes" method="post" class="row g-3">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <form:form modelAttribute="discount" method="post" action="${ctx}/admin/promo-codes" cssClass="row g-3">
 
                 <div class="col-md-4">
-                    <label class="form-label">Code</label>
-                    <input type="text" name="code" class="form-control" maxlength="64" required>
+                    <label for="code" class="form-label"><spring:message code="admin.code"/></label>
+                    <form:input path="code" id="code" maxlength="64" cssClass="form-control"/>
+                    <form:errors path="code" cssClass="text-danger small"/>
                 </div>
 
                 <div class="col-md-3">
-                    <label class="form-label">Remise</label>
+                    <label for="discountField" class="form-label"><spring:message code="admin.discount"/></label>
                     <div class="input-group">
-                        <input type="number" name="discount" class="form-control" step="0.01" min="0" required>
+                        <form:input path="discount" id="discountField" type="number" step="0.01" min="0" cssClass="form-control"/>
                         <span class="input-group-text">%</span>
                     </div>
+                    <form:errors path="discount" cssClass="text-danger small"/>
                 </div>
 
                 <div class="col-md-3 d-flex align-items-end">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="isValid" name="isValid" checked>
-                        <label class="form-check-label" for="isValid">Actif</label>
+                        <form:checkbox path="valid" id="isValid" cssClass="form-check-input"/>
+                        <label class="form-check-label" for="isValid"><spring:message code="admin.active"/></label>
                     </div>
                 </div>
 
                 <div class="col-12">
                     <button class="btn btn-dark">
-                        <i class="bi bi-save"></i> Créer
+                        <i class="bi bi-save"></i> <spring:message code="admin.create"/>
                     </button>
                 </div>
-            </form>
+            </form:form>
         </div>
     </div>
 
-    <!-- Liste -->
     <div class="card">
         <div class="card-header fw-semibold">
-            <i class="bi bi-list-ul me-2"></i>Codes existants
+            <i class="bi bi-list-ul me-2"></i><spring:message code="admin.existing"/>
         </div>
         <div class="card-body p-0">
             <c:choose>
                 <c:when test="${empty promoCodes}">
-                    <div class="p-4 text-muted">Aucun code pour l’instant.</div>
+                    <div class="p-4 text-muted"><spring:message code="admin.none"/></div>
                 </c:when>
                 <c:otherwise>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle m-0">
                             <thead class="table-light">
                             <tr>
-                                <th>Code</th>
-                                <th>Remise</th>
-                                <th>Statut</th>
-                                <th class="text-end">Actions</th>
+                                <th><spring:message code="admin.code"/></th>
+                                <th><spring:message code="admin.discount"/></th>
+                                <th><spring:message code="admin.status.active"/></th>
+                                <th class="text-end"><spring:message code="admin.actions"/></th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach var="p" items="${promoCodes}">
                                 <tr>
                                     <td class="fw-semibold"><c:out value="${p.code}"/></td>
-                                    <td>
-                                        <fmt:formatNumber value="${p.discount}" minFractionDigits="0" maxFractionDigits="2"/>%
-                                    </td>
+                                    <td><fmt:formatNumber value="${p.discount}" minFractionDigits="0" maxFractionDigits="2"/>%</td>
                                     <td>
                                         <c:if test="${p.valid}">
-                                            <span class="badge text-bg-success">Actif</span>
+                                            <span class="badge text-bg-success"><spring:message code="admin.status.active"/></span>
                                         </c:if>
                                         <c:if test="${!p.valid}">
-                                            <span class="badge text-bg-secondary">Inactif</span>
+                                            <span class="badge text-bg-secondary"><spring:message code="admin.status.inactive"/></span>
                                         </c:if>
                                     </td>
                                     <td class="text-end">
-                                        <form action="${ctx}/admin/promo-codes/${p.code}/delete" method="post" class="d-inline"
-                                              onsubmit="return confirm('Supprimer le code « ${p.code} » ?');">
-                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <form:form method="post" action="${ctx}/admin/promo-codes/${p.code}/delete"
+                                                   cssClass="d-inline"
+                                                   onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce code promo ?');">
                                             <button class="btn btn-sm btn-outline-danger">
                                                 <i class="bi bi-trash"></i>
                                             </button>
-                                        </form>
+                                        </form:form>
                                     </td>
                                 </tr>
                             </c:forEach>

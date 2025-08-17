@@ -133,3 +133,63 @@ footer {
     .form-actions { flex-direction: column; align-items: stretch; }
     .form-button { text-align: center; }
 }
+/* ===== Checkout Card ===== */
+.checkout-card {
+    max-width: 960px;
+    margin: 28px auto;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.06);
+}
+
+.checkout-title {
+    margin: 0 0 16px 0;
+    color: #003b7a;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.table-clean {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e8e8e8;
+}
+.table-clean thead {
+    background: #f5f7fb;
+}
+.table-clean th, .table-clean td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+.table-clean tfoot th, .table-clean tfoot td {
+    border-top: 2px solid #e8e8e8;
+    background: #fafafa;
+}
+
+.inline-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.inline-form .form-input {
+    max-width: 320px;
+}
+
+.text-right { text-align: right; }
+.m-0 { margin: 0; }
+.mt-2 { margin-top: .5rem; }
+.mt-3 { margin-top: 1rem; }
+.mb-0 { margin-bottom: 0; }
+.mb-3 { margin-bottom: 1rem; }
+
+.btn-outline {
+    background: transparent;
+    color: #003b7a;
+    border: 1px solid #003b7a;
+}
+.btn-outline:hover { background: rgba(0,59,122,.06); }

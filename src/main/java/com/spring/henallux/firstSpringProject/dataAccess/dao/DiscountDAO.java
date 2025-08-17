@@ -5,49 +5,48 @@ import com.spring.henallux.firstSpringProject.dataAccess.repository.DiscountRepo
 import com.spring.henallux.firstSpringProject.dataAccess.util.DiscountConverter;
 import com.spring.henallux.firstSpringProject.model.Discount;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Repository
+@Service
 @Transactional
 public class DiscountDAO implements DiscountDataAccess {
-
     private final DiscountRepository repository;
-    private final DiscountConverter converter;
+    private final DiscountConverter discountConverter;
 
-    public DiscountDAO(DiscountRepository repository, DiscountConverter converter) {
+    public DiscountDAO(DiscountRepository repository, DiscountConverter discountConverter) {
         this.repository = repository;
-        this.converter = converter;
+        this.discountConverter = discountConverter;
+    }
+
+    @Override
+    public Discount findByCode(String code) {
+        DiscountEntity entity = repository.findByCode(code);
+        if (entity == null) return null;
+        return discountConverter.discountEntityToModel(entity);
     }
 
     @Override
     public List<Discount> findAll() {
         return repository.findAll()
                 .stream()
-                .map(converter::discountEntityToModel)
+                .map(discountConverter::discountEntityToModel)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Discount findByCode(String code) {
-        return converter.discountEntityToModel(repository.findByCode(code));
-    }
-
-    @Override
     public Discount save(Discount discount) {
-        DiscountEntity saved = repository.save(converter.discountModelToEntity(discount));
-        return converter.discountEntityToModel(saved);
+        DiscountEntity toSave = discountConverter.discountModelToEntity(discount);
+        DiscountEntity saved = repository.save(toSave);
+        return discountConverter.discountEntityToModel(saved);
     }
 
     @Override
-    public void deleteByCode(String code) {
-        repository.deleteByCode(code);
-    }
+    public void deleteByCode(String code) { repository.deleteByCode(code); }
 
     @Override
-    public boolean existsByCode(String code) {
-        return repository.existsByCode(code);
-    }
+    public boolean existsByCode(String code) { return repository.existsByCode(code); }
 }
