@@ -1,13 +1,18 @@
 package com.spring.henallux.firstSpringProject.controller;
+
 import com.spring.henallux.firstSpringProject.dataAccess.dao.DiscountDataAccess;
 import com.spring.henallux.firstSpringProject.model.Discount;
 import com.spring.henallux.firstSpringProject.service.CartService;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/payement")
@@ -15,6 +20,7 @@ public class PaymentController {
 
     private final CartService cartService;
     private final DiscountDataAccess discountDao;
+    private final MessageSource messageSource; // i18n
 
     private static final String PAYPAL_URL = "https://www.sandbox.paypal.com/cgi-bin/webscr";
     private static final String BUSINESS = "sb-vdqmk45344677@business.example.com";
@@ -25,9 +31,10 @@ public class PaymentController {
 
     private static final String SESSION_COUPON = "appliedCoupon";
 
-    public PaymentController(CartService cartService, DiscountDataAccess discountDao) {
+    public PaymentController(CartService cartService, DiscountDataAccess discountDao, MessageSource messageSource) {
         this.cartService = cartService;
         this.discountDao = discountDao;
+        this.messageSource = messageSource;
     }
 
     @GetMapping
@@ -40,12 +47,13 @@ public class PaymentController {
         model.addAttribute("cancelUrl", CANCEL_URL);
         model.addAttribute("currency", CURRENCY);
 
-        BigDecimal total = cartService.getTotal();
+        // total toujours à 2 décimales
+        BigDecimal total = cartService.getTotal().setScale(2, RoundingMode.HALF_UP);
         model.addAttribute("paymentCartItems", cartService.getItems());
 
         String appliedCode = (String) session.getAttribute(SESSION_COUPON);
         BigDecimal discountRate = BigDecimal.ZERO;
-        BigDecimal discountAmount = BigDecimal.ZERO;
+        BigDecimal discountAmount = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         BigDecimal finalTotal = total;
 
         if (appliedCode != null) {
@@ -53,8 +61,13 @@ public class PaymentController {
 
             if (d != null && Boolean.TRUE.equals(d.isValid())) {
                 discountRate = d.getDiscount();
-                discountAmount = total.multiply(discountRate).divide(BigDecimal.valueOf(100));
-                finalTotal = total.subtract(discountAmount);
+
+                discountAmount = total.multiply(discountRate)
+                        .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP)
+                        .setScale(2, RoundingMode.HALF_UP);
+
+                finalTotal = total.subtract(discountAmount)
+                        .setScale(2, RoundingMode.HALF_UP);
 
                 model.addAttribute("discountRate", discountRate);
                 model.addAttribute("discountAmount", discountAmount);
@@ -73,11 +86,12 @@ public class PaymentController {
     @PostMapping
     public String applyCoupon(@RequestParam(value = "code", required = false) String rawCode,
                               HttpSession session,
-                              RedirectAttributes ra) {
+                              RedirectAttributes ra,
+                              Locale locale) {
         String code = (rawCode == null) ? "" : rawCode.trim();
 
         if (code.isEmpty()) {
-            ra.addFlashAttribute("error", "Veuillez entrer un code.");
+            ra.addFlashAttribute("error", messageSource.getMessage("coupon.error.empty", null, locale));
             return "redirect:/payement";
         }
 
@@ -90,13 +104,13 @@ public class PaymentController {
                         || d.getDiscount().compareTo(new BigDecimal("100")) > 0;
 
         if (invalid) {
-            ra.addFlashAttribute("error", "Code promo invalide.");
+            ra.addFlashAttribute("error", messageSource.getMessage("coupon.error.invalid", null, locale));
             session.removeAttribute(SESSION_COUPON);
             return "redirect:/payement";
         }
 
         session.setAttribute(SESSION_COUPON, code);
-        ra.addFlashAttribute("success", "Code appliqué avec succès !");
+        ra.addFlashAttribute("success", messageSource.getMessage("coupon.success", null, locale));
         return "redirect:/payement";
     }
 }

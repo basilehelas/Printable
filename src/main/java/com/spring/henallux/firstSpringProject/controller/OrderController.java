@@ -54,7 +54,6 @@ public class OrderController {
         System.out.println("Email de l'utilisateur connecté: " + email);
 
 
-        //UserEntity user = userRepository.findByEmail("basile.helas@gmail.com");
         UserEntity user = userRepository.findByEmail(email);
 
 
