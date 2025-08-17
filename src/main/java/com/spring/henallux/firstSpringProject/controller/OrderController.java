@@ -48,15 +48,8 @@ public class OrderController {
     @GetMapping("/checkout")
     @Transactional
     public String checkout(@AuthenticationPrincipal com.spring.henallux.firstSpringProject.model.User principal) {
-
-
         String email = principal.getEmail();
-        System.out.println("Email de l'utilisateur connecté: " + email);
-
-
         UserEntity user = userRepository.findByEmail(email);
-
-
         OrderEntity order = new OrderEntity();
         order.setUserId(user.getId());
         order.setPaid(false);
