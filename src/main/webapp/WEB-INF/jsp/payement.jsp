@@ -127,10 +127,5 @@
       </button>
     </form>
 
-    <form method="post" action="${checkoutUrl}">
-      <button type="submit" class="btn btn-success">
-        ${checkoutLabel}
-      </button>
-    </form>
   </div>
 </div>

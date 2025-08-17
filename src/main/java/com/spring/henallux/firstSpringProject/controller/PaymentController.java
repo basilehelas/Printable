@@ -13,6 +13,7 @@ import com.spring.henallux.firstSpringProject.dataAccess.entity.OrderEntity;
 
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
@@ -43,13 +44,13 @@ public class PaymentController {
         this.orderRepository = orderRepository;
     }
 
-    @GetMapping
-    public String paymentForm(Model model, @RequestParam("orderId") Integer orderId, HttpSession session) {
+    @GetMapping("/{orderId}")
+    public String paymentForm(Model model, @PathVariable("orderId") Integer orderId, HttpSession session) {
 
         model.addAttribute("paypalUrl", PAYPAL_URL);
         model.addAttribute("business", BUSINESS);
         model.addAttribute("clientId", CLIENT_ID);
-        model.addAttribute("returnUrl", RETURN_URL + "?orderId=" + orderId);
+        model.addAttribute("returnUrl", RETURN_URL + "/" + orderId);
         model.addAttribute("cancelUrl", CANCEL_URL);
         model.addAttribute("currency", CURRENCY);
 
@@ -94,21 +95,23 @@ public class PaymentController {
     }
 
 
-    @GetMapping("/success")
-    public String paymentSuccess(@RequestParam("orderId") Integer orderId) {
+    @GetMapping("/success/{orderId}")
+    @Transactional
+    public String paymentSuccess(@PathVariable("orderId") Integer orderId) {
 
         OrderEntity order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalStateException("Commande introuvable"));
+                .orElseThrow(() -> new IllegalStateException("Order not found"));
 
-        // Marquer comme payée
+
         order.setPaid(true);
+        orderRepository.save(order);
 
         cartService.clear();
         return "integrated:payment-success";
     }
 
     @GetMapping("/failed")
-    public String paymentFailed(Model model) {
+    public String paymentFailed() {
         return "integrated:payment-failed";
     }
 

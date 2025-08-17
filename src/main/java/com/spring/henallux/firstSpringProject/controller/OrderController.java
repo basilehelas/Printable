@@ -79,7 +79,7 @@ public class OrderController {
 
 
 
-        return "redirect:/payement?orderId="+ order.getOrderId();
+        return "redirect:/payement/"+ order.getOrderId();
     }
 
 }

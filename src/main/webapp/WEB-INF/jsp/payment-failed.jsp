@@ -7,7 +7,7 @@
         <a href="${pageContext.request.contextPath}/home" class="btn btn-secondary">
             Retour à l'accueil
         </a>
-        <a href="${pageContext.request.contextPath}/payement" class="btn btn-primary">
+        <a href="${pageContext.request.contextPath}/orders/checkout" class="btn btn-primary">
             Réessayer le paiement
         </a>
     </div>
