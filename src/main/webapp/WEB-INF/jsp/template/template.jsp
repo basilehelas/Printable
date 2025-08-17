@@ -29,7 +29,8 @@
         <h5 class="offcanvas-title" id="cartOffcanvasLabel">
             <i class="bi bi-cart3"></i> <spring:message code="navbar.cart"/>
         </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<spring:message code="cart.close"/>"></button>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="<spring:message code="cart.close"/>"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column">
 
@@ -52,8 +53,10 @@
                                            name="quantity"
                                            value="${item.quantity}"
                                            min="1"
+                                           step="1"
                                            class="form-control form-control-sm"
                                            style="width: 70px; text-align:center;"
+                                           oninput="this.value = Math.floor(this.value)"
                                            onchange="this.form.submit();"/>
                                 </form>
                             </div>
@@ -66,7 +69,8 @@
                                    minFractionDigits="2"/>
             </span>
                             <form action="${ctx}/cart/remove/${item.product.id}" method="post" class="mt-1">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" title="<spring:message code="cart.removeItem"/>">
+                                <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        title="<spring:message code="cart.removeItem"/>">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -152,8 +156,10 @@
                             code="navbar.language"/></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-                        <li><a class="dropdown-item" href="${localeFr}"><spring:message code="locale.button.fr"/></a></li>
-                        <li><a class="dropdown-item" href="${localeEn}"><spring:message code="locale.button.en"/></a></li>
+                        <li><a class="dropdown-item" href="${localeFr}"><spring:message code="locale.button.fr"/></a>
+                        </li>
+                        <li><a class="dropdown-item" href="${localeEn}"><spring:message code="locale.button.en"/></a>
+                        </li>
 
                     </ul>
                 </li>
