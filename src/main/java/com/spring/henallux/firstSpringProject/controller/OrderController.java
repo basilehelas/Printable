@@ -46,14 +46,11 @@ public class OrderController {
     }
 
     @PostMapping("/checkout")
-    @PreAuthorize("isAuthenticated()")
     @Transactional
-    public String checkout(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new IllegalStateException("User not connected 99999999999999");
-        }
+    public String checkout(@AuthenticationPrincipal com.spring.henallux.firstSpringProject.model.User principal) {
 
-        String email = authentication.getName();
+
+        String email = principal.getEmail();
         System.out.println("Email de l'utilisateur connecté: " + email);
 
 
@@ -71,7 +68,7 @@ public class OrderController {
             Integer qty = entry.getValue();
 
             ProductEntity pEntity = productRepository.findById(p.getId())
-                    .orElseThrow(() -> new IllegalStateException("Produit introuvable: id=" + p.getId()));
+                    .orElseThrow(() -> new IllegalStateException("Product not found: id=" + p.getId()));
 
             OrderLineEntity line = new OrderLineEntity();
             line.setId(new OrderLineId(order.getOrderId(), pEntity.getId()));
