@@ -32,15 +32,15 @@ db/data/ -> fichier(s) SQL de données à importer via MySQL Workbench
 ---
 
 > Les fichiers du dossier `/data` contiennent des images (BLOB). **Ils doivent être importés via `Server > Data Import` dans MySQL Workbench.**  
-> Ne les exécute pas comme de simples scripts (`Run`) sinon ne fontionneront pas.
+> Ne pas exécuter comme de simples scripts (`Run`) sinon les images ne fontionneront pas.
 
 ---
 
 ## 🧪 Test du programme
 
-Une fois la base importée et le projet lancé, tu peux tester le programme en te connectant avec le compte administrateur suivant :
+Une fois la base importée et le projet lancé, vous pouvez tester le programme en créant un compte ou en se connectant avec le compte administrateur suivant :
 
-- **Login :** `admin@admin.com`
+- **Login :** `admin@admin.admin`
 - **Mot de passe :** `AdminAdmin`
 
 Cela permet d’accéder a l'éditeur de code promo.
