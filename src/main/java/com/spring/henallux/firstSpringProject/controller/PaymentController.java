@@ -53,6 +53,7 @@ public class PaymentController {
         model.addAttribute("returnUrl", RETURN_URL + "/" + orderId);
         model.addAttribute("cancelUrl", CANCEL_URL);
         model.addAttribute("currency", CURRENCY);
+        model.addAttribute("orderId", orderId);
 
         // total toujours à 2 décimales
         BigDecimal total = cartService.getTotal().setScale(2, RoundingMode.HALF_UP);
@@ -87,13 +88,10 @@ public class PaymentController {
         model.addAttribute("amount", finalTotal);
         model.addAttribute("subtotal", total);
         model.addAttribute("appliedCode", appliedCode);
-
         //cartService.clear();
-
 
         return "integrated:payement";
     }
-
 
     @GetMapping("/success/{orderId}")
     @Transactional
@@ -115,11 +113,9 @@ public class PaymentController {
         return "integrated:payment-failed";
     }
 
-
-
-
     @PostMapping
     public String applyCoupon(@RequestParam(value = "code", required = false) String rawCode,
+                              @RequestParam("orderId") Integer orderId,
                               HttpSession session,
                               RedirectAttributes ra,
                               Locale locale) {
@@ -127,7 +123,7 @@ public class PaymentController {
 
         if (code.isEmpty()) {
             ra.addFlashAttribute("error", messageSource.getMessage("coupon.error.empty", null, locale));
-            return "redirect:/payement";
+            return "redirect:/payement/" + orderId;
         }
 
         Discount d = discountDao.findByCode(code);
@@ -141,11 +137,11 @@ public class PaymentController {
         if (invalid) {
             ra.addFlashAttribute("error", messageSource.getMessage("coupon.error.invalid", null, locale));
             session.removeAttribute(SESSION_COUPON);
-            return "redirect:/payement";
+            return "redirect:/payement/" + orderId;
         }
 
         session.setAttribute(SESSION_COUPON, code);
         ra.addFlashAttribute("success", messageSource.getMessage("coupon.success", null, locale));
-        return "redirect:/payement";
+        return "redirect:/payement/" + orderId;
     }
 }
