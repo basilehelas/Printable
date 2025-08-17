@@ -10,7 +10,7 @@ public class Discount {
     private String code;
 
     @NotNull
-    @Digits(integer = 3, fraction = 2) // compatible DECIMAL(5,2) : max 999.99
+    @Digits(integer = 3, fraction = 2)
     @DecimalMin(value = "0.00")
     private BigDecimal discount;
 

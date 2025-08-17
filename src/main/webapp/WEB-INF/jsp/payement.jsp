@@ -97,5 +97,12 @@
         💳 Payer avec PayPal
       </button>
     </form>
+
+    <form method="post" action="${pageContext.request.contextPath}/orders/checkout">
+      <button type="submit" class="btn btn-success">
+        Checkout
+      </button>
+    </form>
+
   </div>
 </div>
