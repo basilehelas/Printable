@@ -35,3 +35,12 @@ db/data/ -> fichier(s) SQL de données à importer via MySQL Workbench
 > Ne les exécute pas comme de simples scripts (`Run`) sinon ne fontionneront pas.
 
 ---
+
+## 🧪 Test du programme
+
+Une fois la base importée et le projet lancé, tu peux tester le programme en te connectant avec le compte administrateur suivant :
+
+- **Login :** `admin@admin.com`
+- **Mot de passe :** `AdminAdmin`
+
+Cela permet d’accéder a l'éditeur de code promo.
