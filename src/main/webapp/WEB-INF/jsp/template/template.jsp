@@ -29,7 +29,7 @@
         <h5 class="offcanvas-title" id="cartOffcanvasLabel">
             <i class="bi bi-cart3"></i> <spring:message code="navbar.cart"/>
         </h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="<spring:message code="cart.close"/>"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column">
 
@@ -66,7 +66,7 @@
                                    minFractionDigits="2"/>
             </span>
                             <form action="${ctx}/cart/remove/${item.product.id}" method="post" class="mt-1">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Supprimer">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="<spring:message code="cart.removeItem"/>">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -89,12 +89,11 @@
         <c:if test="${empty cartItems}">
             <div class="text-center my-auto py-5">
                 <i class="bi bi-cart-x fs-1 text-muted mb-3"></i>
-                <h5 class="text-muted mb-2">Votre panier est vide</h5>
-                <p class="text-muted mb-4">Ajoutez des produits pour commencer votre aventure d'achat !</p>
+                <h5 class="text-muted mb-2"><spring:message code="cart.empty.message"/></h5>
+                <p class="text-muted mb-4"><spring:message code="cart.empty.seeProducts"/></p>
                 <a href="${ctx}/products" class="btn btn-outline-dark">
-                    <i class="bi bi-bag"></i> Voir les produits
+                    <i class="bi bi-bag"></i> <spring:message code="cart.empty.addProducts"/>
                 </a>
-                <%--                <spring:message code="cart.empty"/>--%>
             </div>
         </c:if>
 
@@ -153,8 +152,8 @@
                             code="navbar.language"/></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-                        <li><a class="dropdown-item" href="${localeFr}">FR – Français</a></li>
-                        <li><a class="dropdown-item" href="${localeEn}">EN – English</a></li>
+                        <li><a class="dropdown-item" href="${localeFr}"><spring:message code="locale.button.fr"/></a></li>
+                        <li><a class="dropdown-item" href="${localeEn}"><spring:message code="locale.button.en"/></a></li>
 
                     </ul>
                 </li>
@@ -170,11 +169,10 @@
                 <sec:authorize access="isAuthenticated()">
                     <sec:authentication property="principal.username" var="username"/>
 
-
                     <li class="nav-item">
                 <span class="nav-link d-flex align-items-center gap-1">
                   <i class="bi bi-person-circle"></i>
-                  <span class="d-md-inline d-none">Bienvenue, ${username}</span>
+                  <span class="d-md-inline d-none"><spring:message code="navbar.welcomeMessage"/> ${username}</span>
                 </span>
                     </li>
 
@@ -218,17 +216,6 @@
         </span>
                     </a>
                 </li>
-
-                <%--                <li class="nav-item">--%>
-                <%--                    <a class="nav-link position-relative d-flex align-items-center gap-1" href="${ctx}/cart"--%>
-                <%--                       aria-label="Panier">--%>
-                <%--                        <i class="bi bi-cart3"></i> <span class="d-md-inline d-none"><spring:message--%>
-                <%--                            code="navbar.cart"/></span>--%>
-                <%--                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-dark">--%>
-                <%--              <c:out value="${cartCount != null ? cartCount : 0}"/>--%>
-                <%--              <span class="visually-hidden"> product in cart</span></span>--%>
-                <%--                    </a>--%>
-                <%--                </li>--%>
             </ul>
         </div>
     </div>
@@ -268,8 +255,8 @@
 
             <!-- Réseaux sociaux -->
             <div class="col-md-4 mb-3">
-                <h6 class="fw-bold"><spring:message code="footer.follow"/></h6>
                 <div class="d-flex gap-3">
+                    <h6 class="fw-bold text-dark"><spring:message code="footer.follow"/></h6>
                     <a href="#" class="text-muted fs-4"><i class="bi bi-facebook"></i></a>
                     <a href="#" class="text-muted fs-4"><i class="bi bi-instagram"></i></a>
                     <a href="#" class="text-muted fs-4"><i class="bi bi-twitter"></i></a>
@@ -279,7 +266,7 @@
         </div>
 
         <div class="border-top pt-3 mt-3 text-center small text-muted">
-            &copy; 2025 Printable — <spring:message code="footer.copyright"/>.
+            <spring:message code="footer.copyright"/>.
         </div>
     </div>
 </footer>
