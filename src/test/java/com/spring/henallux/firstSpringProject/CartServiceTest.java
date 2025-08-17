@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CartServiceTest {
-
     private CartService cartService;
     private Product product;
 
@@ -21,7 +20,7 @@ public class CartServiceTest {
     }
 
     @Test
-    void testUpdateQuantity_ShouldUpdateCorrectly() {
+    void updateQuantityInCart() {
         cartService.addProduct(product, 1);
         assertEquals(1, cartService.getItems().get(product));
 
@@ -39,5 +38,11 @@ public class CartServiceTest {
         // if quantity < 1 -> remove
         cartService.updateQuantity(product, 0);
         assertFalse(cartService.getItems().containsKey(product));
+    }
+
+    @Test
+    void addNegativeQuantity() {
+        cartService.addProduct(product, 0);
+        assertEquals(1, cartService.getItems().get(product));
     }
 }
