@@ -45,7 +45,6 @@
                                 </p>
                                 <div class="mt-auto d-flex justify-content-between align-items-center">
                                     <span class="fw-bold">${p.price} €</span>
-                                    <i class="bi bi-cart-plus fs-5 text-secondary" title="Ajouter (bientôt)"></i>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +97,6 @@
                         <p id="pm-desc" class="text-muted"></p>
                         <div class="d-flex align-items-center gap-3 mt-3">
                             <div id="pm-price" class="fw-bold fs-4"></div>
-                            <i class="bi bi-cart-plus fs-3 text-secondary" title="Ajouter (bientôt)"></i>
                         </div>
                     </div>
                 </div>
@@ -107,7 +105,7 @@
             <div class="modal-footer">
                 <form id="pm-add-form" method="post" action="">
                     <div class="d-flex align-items-center gap-2">
-                        <label for="quantity" class="form-label mb-0">Quantité :</label>
+                        <label for="quantity" class="form-label mb-0"><spring:message code="products.quantity"/> :</label>
                         <input type="number"
                                name="quantity"
                                id="quantity"
@@ -117,16 +115,13 @@
                                style="width: 80px;" />
 
                         <button type="submit" class="btn btn-dark">
-                            <i class="bi bi-cart-plus"></i> Ajouter au panier
+                            <i class="bi bi-cart-plus"></i> <spring:message code="products.addToCart"/>
                         </button>
                     </div>
                 </form>
 
-                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal"><spring:message code="products.close"/></button>
             </div>
-
-
-
         </div>
     </div>
 </div>
