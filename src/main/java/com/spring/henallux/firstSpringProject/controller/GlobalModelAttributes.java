@@ -23,15 +23,8 @@ public class GlobalModelAttributes {
     }
 
     @ModelAttribute("categoriesNames")
-    public List<CategoryLabel> categoriesNames(
-            @RequestParam(value = "lang", required = false) String lang
-    ) {
-
-        String language = ((lang != null && !lang.isEmpty())
-                ? lang
-                : "fr");
-
-        return categoryTx.listCategoriesWithNames(language);
+    public List<CategoryLabel> categoriesNames() {
+        return categoryTx.listCategoriesWithNames();
     }
 
     @ModelAttribute("cartCount")

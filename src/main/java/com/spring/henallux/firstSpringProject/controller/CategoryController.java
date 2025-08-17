@@ -16,8 +16,8 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public String list(@RequestParam(defaultValue = "en") String lang, Model model) {
-        model.addAttribute("categories", i18n.listCategoriesWithNames(lang));
+    public String list(Model model) {
+        model.addAttribute("categories", i18n.listCategoriesWithNames());
         return "integrated:categories";
     }
 }

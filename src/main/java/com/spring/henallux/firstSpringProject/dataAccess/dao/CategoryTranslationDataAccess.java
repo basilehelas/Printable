@@ -4,5 +4,5 @@ import com.spring.henallux.firstSpringProject.model.CategoryLabel;
 import java.util.List;
 
 public interface CategoryTranslationDataAccess {
-    List<CategoryLabel> listCategoriesWithNames(String languageId);
+    List<CategoryLabel> listCategoriesWithNames();
 }
