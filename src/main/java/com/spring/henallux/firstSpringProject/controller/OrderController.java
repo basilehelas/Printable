@@ -79,14 +79,8 @@ public class OrderController {
 
 
 
-        return "redirect:/payement";
+        return "redirect:/payement?orderId="+ order.getOrderId();
     }
 
-    @GetMapping("/{orderId}")
-    public String show(@PathVariable Integer orderId, RedirectAttributes ra) {
-
-        ra.addFlashAttribute("info", "Récapitulatif de la commande #" + orderId + " (à implémenter).");
-        return "redirect:/home";
-    }
 }
 
